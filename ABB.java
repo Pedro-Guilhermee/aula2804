@@ -342,4 +342,55 @@ public class ABB<T extends Comparable<T>> {
             return null;
         }
     }  
+
+    // d) Calcular gasto total com salários
+    public float calcularSalarios() {
+        return calcularSalarios(raiz);
+    }
+
+    private float calcularSalarios(Node<T> no) {
+        if (no == null) return 0;
+        Funcionario f = (Funcionario) no.getValue();
+        return f.getSalario() + calcularSalarios(no.getFilhoEsquerdo()) + calcularSalarios(no.getFilhoDireito());
+    }
+
+    // e) Contar por sexo
+    public int contarPorSexo(char sexo) {
+        return contarPorSexo(raiz, sexo);
+    }
+
+    private int contarPorSexo(Node<T> no, char sexo) {
+        if (no == null) return 0;
+        Funcionario f = (Funcionario) no.getValue();
+        int count = (f.getSexo() == sexo) ? 1 : 0;
+        return count + contarPorSexo(no.getFilhoEsquerdo(), sexo) + contarPorSexo(no.getFilhoDireito(), sexo);
+    }
+
+    // f) Contar por categoria
+    public int contarPorCategoria(char categoria) {
+        return contarPorCategoria(raiz, categoria);
+    }
+
+    private int contarPorCategoria(Node<T> no, char categoria) {
+        if (no == null) return 0;
+        Funcionario f = (Funcionario) no.getValue();
+        int count = (f.getCategoria() == categoria) ? 1 : 0;
+        return count + contarPorCategoria(no.getFilhoEsquerdo(), categoria) + contarPorCategoria(no.getFilhoDireito(), categoria);
+    }
+
+    // g) Mostrar dados a partir de certa idade
+    public void mostrarPorIdade(int idadeMinima) {
+        mostrarPorIdade(raiz, idadeMinima);
+    }
+
+    private void mostrarPorIdade(Node<T> no, int idadeMinima) {
+        if (no != null) {
+            mostrarPorIdade(no.getFilhoEsquerdo(), idadeMinima);
+            Funcionario f = (Funcionario) no.getValue();
+            if (f.getIdade() >= idadeMinima) {
+                System.out.println(f);
+            }
+            mostrarPorIdade(no.getFilhoDireito(), idadeMinima);
+        }
+    }
 }
