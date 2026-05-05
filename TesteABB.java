@@ -48,11 +48,15 @@ public class TesteABB {
                     simular(abb);
                     System.out.println("Simulação concluída!");
                     break;
-                case 8:
-                    System.out.print("Deseja realmente sair? (S/N): ");
-                    char sair = sc.next().toUpperCase().charAt(0);
-                    if (sair == 'S') System.out.println("Encerrando...");
-                    else opc = 0;
+                case 8: 
+                    System.out.print("Deseja realmente sair do sistema? (S/N): ");
+                    char confirmar = sc.next().toUpperCase().charAt(0);
+                    if (confirmar == 'S') {
+                        System.out.println("Sistema encerrado.");
+                    } else {
+                        opc = 0;
+                        System.out.println("Retornando ao menu...");
+                    }
                     break;
             }
         } while (opc != 8);
@@ -72,8 +76,18 @@ public class TesteABB {
 
     private static void simular(ABB<Funcionario> tree) {
         int[] ids = {50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45, 55, 65, 75, 85, 5, 15, 90, 95, 110};
-        for (int id : ids) {
-            tree.inserir(new Funcionario(id, 'P', "Func " + id, "Cargo", 'M', 20 + (id % 30), 2000 + id));
+        char[] categorias = {'P', 'O', 'H'};
+        char[] sexos = {'M', 'F'};
+
+        for (int i = 0; i < ids.length; i++) {
+            int id = ids[i];
+            // Alterna sexo e categoria com base no índice para diversificar os dados
+            char cat = categorias[i % 3]; 
+            char sexo = sexos[i % 2];
+            int idade = 20 + (id % 30);
+            float sal = 2000 + (id * 10.5f);
+
+            tree.inserir(new Funcionario(id, cat, "Funcionario " + id, "Cargo " + (i % 5), sexo, idade, sal));
         }
     }
 }
